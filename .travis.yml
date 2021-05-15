@@ -13,14 +13,35 @@ matrix:
     - os: osx
       compiler: clang
       cache:
-        directories: 
-          - export GCC_DIR=$HOME/gcc-arm-none-eabi-7-2017-q4-major
-          - export GCC_ARCHIVE=$HOME/gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2
-          - export GCC_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/7-2017q4/gcc-arm-none-eabi-7-2017-q4-major-mac.tar.bz2
-          - if [ ! -f $GCC_DIR/bin/arm-none-eabi-g++ ]; then wget $GCC_URL -O $GCC_ARCHIVE; tar xfj $GCC_ARCHIVE -C $HOME; fi
-          - export PATH=$GCC_DIR/bin:$PATH
+        directories:
+          - $HOME/gcc-arm-none-eabi-7-2017-q4-major
+      install:
+        - export GCC_DIR=$HOME/gcc-arm-none-eabi-7-2017-q4-major
+        - export GCC_ARCHIVE=$HOME/gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2
+        - export GCC_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/7-2017q4/gcc-arm-none-eabi-7-2017-q4-major-mac.tar.bz2
+        - if [ ! -f $GCC_DIR/bin/arm-none-eabi-g++ ]; then wget $GCC_URL -O $GCC_ARCHIVE; tar xfj $GCC_ARCHIVE -C $HOME; fi
+        - export PATH=$GCC_DIR/bin:$PATH
       script: make
   
+  - os: linux
+    compiler: gcc
+    cache:
+      directories:
+        - $HOME/gcc-arm-none-eabi-7-2017-q4-major
+    install:
+      - export GCC_DIR=$HOME/gcc-arm-none-eabi-7-2017-q4-major
+      - export GCC_ARCHIVE=$HOME/gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2
+      - export GCC_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/7-2017q4/gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2
+      - if [ ! -e $GCC_DIR/bin/arm-none-eabi-g++ ]; then wget $GCC_URL -O $GCC_ARCHIVE; tar xfj $GCC_ARCHIVE -C $HOME; fi
+      - export PATH=$GCC_DIR/bin:$PATH
+    script: make
+
+  - os: windows
+    before install:
+      - choco install make
+    install: 
+      - choco install gcc-arm-embedded
+    script: make
 
         
 
