@@ -10,23 +10,12 @@ sudo: false
 
 matrix:
   include:
-    - os: linux
-      compiler: gcc
-      script: make
-
     - os: osx
       compiler: clang
       cache:
         directories: 
           - $HOME/gcc-arm-none-eabi-7-2017-q4-major
       script: make
-    
-  - os: windows
-    before install:
-      - choco install make
-    install: 
-      - choco install gcc-arm-embedded
-    script: make
 
         
 
